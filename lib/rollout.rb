@@ -128,6 +128,16 @@ class Rollout
     @storage.del(key(feature))
   end
 
+  def to_hash
+    results = {}
+    features.each { |feature|
+      with_feature(feature) do |f|
+        results[feature] = f.to_hash
+      end
+    }
+    results
+  end
+
   def set(feature, desired_state)
     with_feature(feature) do |f|
       if desired_state
